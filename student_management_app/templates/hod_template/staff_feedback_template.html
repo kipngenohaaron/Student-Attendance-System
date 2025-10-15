@@ -9,145 +9,134 @@
 {% load static %}
 
 <section class="content">
-        <div class="container-fluid">
+  <div class="container-fluid">
 
-            <div class="row">
-                <div class="col-md-12">
-                    <!-- general form elements -->
-                    <div class="card card-primary">
-                        <div class="card-header">
-                            <h3 class="card-title">Staff Feedback</h3>
-                        </div>
-                        <!-- /.card-header -->
+    <div class="row">
+      <div class="col-md-12">
 
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Staff ID</th>
-                                    <th>Staff Name</th>
-                                    <th>Message</th>
-                                    <th>Sended On</th>
-                                    <th>Reply</th>
-                                </tr>
-                                </thead>
+        <!-- Card for Staff Feedback -->
+        <div class="card shadow-lg border-0 rounded-lg">
+          <div class="card-header bg-gradient-primary text-white">
+            <h3 class="card-title"><i class="fas fa-comments"></i> Staff Feedback</h3>
+          </div>
 
-                                {% for feedback in feedbacks %}
-                                <tbody>
-                                <tr>
-                                    <td>{{ feedback.id }}</td>
-                                    <td>{{ feedback.staff_id.admin.id }}</td>
-                                    <td>{{ feedback.staff_id.admin.first_name }} {{ feedback.staff_id.admin.last_name }}</td> 
-                                    <td>{{ feedback.feedback }}</td>
-                                    <td>{{ feedback.created_at }}</td>
-                                    <td>
-                                        {% if feedback.feedback_reply == "" %}
-                                            <button class="btn btn-success reply_open_modal" data-toggle="modal" data-target="#replyModal">Reply</button>
-                                        {% else %}
-                                            {{ feedback.feedback_reply }}
-                                        {% endif %}
-                                        
-                                    </td>
-                                </tr>
-                                </tbody>
-                                {% endfor %}
-
-                            </table>
-                        </div>
-                    
-                    </div>
-                    <!-- /.card -->
-
-                </div>
+          <div class="card-body">
+            {% if feedbacks %}
+            <div class="table-responsive">
+              <table class="table table-hover table-striped align-middle">
+                <thead class="table-primary text-center">
+                  <tr>
+                    <th>ID</th>
+                    <th>Staff ID</th>
+                    <th>Staff Name</th>
+                    <th>Message</th>
+                    <th>Sent On</th>
+                    <th>Reply</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for feedback in feedbacks %}
+                  <tr>
+                    <td class="text-center">{{ feedback.id }}</td>
+                    <td class="text-center">{{ feedback.staff_id.admin.id }}</td>
+                    <td>{{ feedback.staff_id.admin.first_name }} {{ feedback.staff_id.admin.last_name }}</td>
+                    <td>{{ feedback.feedback }}</td>
+                    <td class="text-muted">{{ feedback.created_at|date:"Y-m-d H:i" }}</td>
+                    <td class="text-center">
+                      {% if feedback.feedback_reply == "" %}
+                        <button class="btn btn-outline-success btn-sm reply_open_modal" data-toggle="modal" data-target="#replyModal">
+                          <i class="fas fa-reply"></i> Reply
+                        </button>
+                      {% else %}
+                        <span class="badge bg-success p-2">{{ feedback.feedback_reply }}</span>
+                      {% endif %}
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
             </div>
-
-        </div><!-- /.container-fluid -->
-      </section>
-
-      {% comment %} Modal to Reply Feedback {% endcomment %}
-      <!-- Modal -->
-        <div class="modal fade" id="replyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Reply Feedback</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>Reply to: <b><span id="reply_name"></span></b></p>
-                <input type="hidden" id="reply_id" name="reply_id" />
-                <textarea class="form-control" rows="5" id="reply_message"></textarea>
-            </div>
-            <div class="modal-footer">
-                {% comment %} <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> {% endcomment %}
-                <button type="button" class="btn btn-primary btn-block" id="reply_button">Reply</button>
-            </div>
-            </div>
-        </div>
+            {% else %}
+              <div class="alert alert-info text-center mt-3">
+                <i class="fas fa-info-circle"></i> No feedback available at the moment.
+              </div>
+            {% endif %}
+          </div>
         </div>
 
-  {% endblock main_content %}
+      </div>
+    </div>
 
-  {% comment %} Custom JS to Identify the Reply and Post Reply {% endcomment %}
+  </div>
+</section>
 
-  {% block custom_js %}
-    <script>
-        $(document).ready(function(){
-            $(".reply_open_modal").click(function(){
-                // Getting Value from Table
-                var id = $(this).parents("tr").children("td:eq(0)").text(); //Getting Selected Row ID (Frist Column)
-                var name = $(this).parents("tr").children("td:eq(2)").text(); //Getting Selected Name (3rd Column)
-                
-                // Adding the Value from Table to Modal form
-                $("#reply_id").val(id);
-                $("#reply_name").text(name);
-            });
+<!-- Modal for Reply -->
+<div class="modal fade" id="replyModal" tabindex="-1" role="dialog" aria-labelledby="replyModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-lg shadow-lg">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="replyModalLabel"><i class="fas fa-reply"></i> Reply to Feedback</h5>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Replying to: <strong><span id="reply_name"></span></strong></p>
+        <input type="hidden" id="reply_id" name="reply_id">
+        <textarea class="form-control" rows="5" id="reply_message" placeholder="Type your reply here..."></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">
+          <i class="fas fa-times"></i> Close
+        </button>
+        <button type="button" class="btn btn-primary btn-sm" id="reply_button">
+          <i class="fas fa-paper-plane"></i> Send Reply
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 
-            $(document).on("click", "#reply_button", function(){
-                //Disabling the Button while data is being saved in Server
-                $(this).attr("disabled", "disabled")
-                $(this).text("Sending Reply...")
+{% endblock main_content %}
 
-                //console.log("SAVE")
-                
+{% block custom_js %}
+<script>
+  $(document).ready(function() {
+    $(".reply_open_modal").click(function() {
+      var id = $(this).closest("tr").find("td:eq(0)").text();
+      var name = $(this).closest("tr").find("td:eq(2)").text();
+      $("#reply_id").val(id);
+      $("#reply_name").text(name);
+    });
 
-                var id=$("#reply_id").val();
-                var reply=$("#reply_message").val();
-                //console.log(student_data);
+    $("#reply_button").click(function() {
+      var id = $("#reply_id").val();
+      var reply = $("#reply_message").val();
 
-                // Saving Attendance Data into Database
+      if (reply.trim() === "") {
+        alert("Please enter a reply message before sending.");
+        return;
+      }
 
-                $.ajax({
-                    url:'{% url 'staff_feedback_message_reply' %}',
-                    type:'POST',
-                    data:{id:id, reply:reply},
-                })
+      $(this).prop("disabled", true).html('<i class="fas fa-spinner fa-spin"></i> Sending...');
 
-                
-                .done(function(response){
-                    
-                    if(response=="True")
-                    {
-                        alert("Reply Sent!")
-                    }
-                    else
-                    {
-                        alert("Failed to Send Reply!")
-                    }
-                    location.reload()
-                    
-                    //console.log(response)
-                })
-
-                .fail(function(){
-                    alert("Error in Sending Feedback Reply.")
-                })
-
-            })
-
-        })
-    </script>
-  {% endblock custom_js %}
+      $.ajax({
+        url: '{% url "staff_feedback_message_reply" %}',
+        type: 'POST',
+        data: { id: id, reply: reply },
+      })
+      .done(function(response) {
+        if (response === "True") {
+          alert("Reply sent successfully!");
+        } else {
+          alert("Failed to send reply.");
+        }
+        location.reload();
+      })
+      .fail(function() {
+        alert("Error occurred while sending reply.");
+      });
+    });
+  });
+</script>
+{% endblock custom_js %}
