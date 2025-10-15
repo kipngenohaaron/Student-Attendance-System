@@ -1,80 +1,114 @@
 {% extends 'base.html' %}
-{% load static %} 
+{% load static %}
 
 {% block content %}
 
-    <body class="hold-transition login-page">
-<div class="login-box">
-  <div class="login-logo">
-	
-<div class="image">
-            <img src='../../static/dist/img/AdminLTELogo.png' class="img-circle elevation-2" alt="piet Image">
-          </div>
-    <a href="{% url 'login' %}"><b> PIET Jaipur</b><br> Student Attendance Management System</a>
-  </div>
-  <!-- /.login-logo -->
-  <div class="card">
-    <div class="card-body login-card-body">
-      <p class="login-box-msg">Sign in to Student Management System</p>
+<body class="hold-transition login-page bg-gradient-light" style="font-family: 'Poppins', sans-serif;">
 
-      <form action="{% url 'doLogin' %}" method="POST">
-      {% csrf_token %}
+<div class="login-box shadow-lg" style="border-radius: 12px; overflow: hidden;">
+  <div class="login-logo mt-3">
+    <div class="image mb-3">
+      <img src="{% static 'dist/img/AdminLTELogo.png' %}" class="img-circle elevation-2" alt="Exalted School Logo" width="100">
+    </div>
+    <a href="{% url 'login' %}" style="color: #007bff; font-weight: 600; font-size: 20px;">
+      <b>Exalted School</b><br>
+      <span style="font-size: 14px; color: #6c757d;">Smart Student Attendance System</span>
+    </a>
+  </div>
+
+  <div class="card border-0" style="border-radius: 12px;">
+    <div class="card-body login-card-body">
+      <p class="login-box-msg text-muted">Sign in to your account</p>
+
+      <form action="{% url 'doLogin' %}" method="POST" autocomplete="off">
+        {% csrf_token %}
         <div class="input-group mb-3">
-          <input type="email" class="form-control" placeholder="Email" name="email">
+          <input type="email" class="form-control" placeholder="Email Address" name="email" required>
           <div class="input-group-append">
-            <div class="input-group-text">
+            <div class="input-group-text bg-primary text-white">
               <span class="fas fa-envelope"></span>
             </div>
           </div>
         </div>
+
         <div class="input-group mb-3">
-          <input type="password" class="form-control" placeholder="Password" name="password">
+          <input type="password" class="form-control" placeholder="Password" name="password" required>
           <div class="input-group-append">
-            <div class="input-group-text">
+            <div class="input-group-text bg-primary text-white">
               <span class="fas fa-lock"></span>
             </div>
           </div>
         </div>
 
-          <div class="col-12">
-            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+        <div class="row mt-3">
+          <div class="col-6">
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" id="rememberMe">
+              <label class="form-check-label" for="rememberMe">Remember Me</label>
+            </div>
           </div>
-
-          {% comment %} <div class="col-12 text-center">
-            <a href="{% url 'password_reset' %}">Reset Password</a>
-          </div>  {% endcomment %}
-
-          {% comment %} Display Messages {% endcomment %}
-          {% if messages %}
-          <div class="col-12">
-            {% for message in messages %}
-              {% if message.tags == "error" %}
-                <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-top: 10px;">
-                  {{ message }}
-                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-              {% endif %}
-            {% endfor %}
+          <div class="col-6 text-right">
+            <a href="#" class="text-secondary small" data-toggle="modal" data-target="#helpModal">Need Help?</a>
           </div>
-          {% endif %}
+        </div>
 
-          <!-- /.col -->
+        <div class="col-12 mt-3">
+          <button type="submit" class="btn btn-primary btn-block shadow">Sign In</button>
         </div>
       </form>
 
+      {% if messages %}
+        <div class="col-12 mt-3">
+          {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+              {{ message }}
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
 
+      <div class="social-auth-links text-center mt-4 mb-3">
+        <p>- OR -</p>
+        <a href="https://github.com/kipngenohaaron" class="btn btn-dark btn-block">
+          <i class="fab fa-github mr-2"></i> Visit Developer's GitHub
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <footer class="text-center mt-4 mb-2 text-muted">
+    <small>
+      © {% now "Y" %} Exalted School Student Attendance System<br>
+      Developed by <b>Kipngenoh Aaron Rotich</b><br>
+      <a href="mailto:kipngenohaaron@gmail.com">kipngenohaaron@gmail.com</a> | 
+      <a href="tel:0724828197">0724828197</a>
+    </small>
+  </footer>
+</div>
+
+<!-- Help Modal -->
+<div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="helpModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content border-0 shadow-lg">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="helpModalLabel">Need Help?</h5>
+        <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body text-center">
+        <p>For support, contact the system administrator:</p>
+        <p><strong>Kipngenoh Aaron Rotich</strong><br>
+          📧 <a href="mailto:kipngenohaaron@gmail.com">kipngenohaaron@gmail.com</a><br>
+          ☎️ 0724828197 / 0724279400
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+      </div>
+    </div>
   </div>
 </div>
-<br><br>
-<footer>
-      <strong>Copyright &copy; {% now "Y" %}, <a href="https://poornima.org">PIET, Jaipur Institute of Engineering and Technology</a></strong> 
-      <br>
-      <div style="text-align:center;">
-        Developed by Ritik Banger, Ronit Khowal, Mohit Taimni (2022 Batch)
-     
-    </footer>
-<!-- /.login-box -->
+
+</body>
 
 {% endblock %}

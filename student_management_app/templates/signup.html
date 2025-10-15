@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<body class="hold-transition register-page bg-gradient-light" style="font-family: 'Poppins', sans-serif;">
+
+<div class="register-box shadow-lg" style="border-radius: 12px; overflow: hidden;">
+  <div class="register-logo mt-3">
+    <div class="image mb-3">
+      <img src="{% static 'dist/img/AdminLTELogo.png' %}" class="img-circle elevation-2" alt="Exalted School Logo" width="100">
+    </div>
+    <a href="{% url 'login' %}" style="color:#007bff;font-weight:600;font-size:20px;">
+      <b>Exalted School</b><br>
+      <span style="font-size:14px;color:#6c757d;">Smart Student Attendance System</span>
+    </a>
+  </div>
+
+  <div class="card border-0">
+    <div class="card-body register-card-body">
+      <p class="login-box-msg text-muted">Create your new account</p>
+
+      <form action="{% url 'signup' %}" method="POST" autocomplete="off">
+        {% csrf_token %}
+        
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="Full Name" name="name" required>
+          <div class="input-group-append">
+            <div class="input-group-text bg-primary text-white">
+              <span class="fas fa-user"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="input-group mb-3">
+          <input type="email" class="form-control" placeholder="Email Address" name="email" required>
+          <div class="input-group-append">
+            <div class="input-group-text bg-primary text-white">
+              <span class="fas fa-envelope"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="input-group mb-3">
+          <input type="password" class="form-control" placeholder="Password" name="password1" required>
+          <div class="input-group-append">
+            <div class="input-group-text bg-primary text-white">
+              <span class="fas fa-lock"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="input-group mb-3">
+          <input type="password" class="form-control" placeholder="Confirm Password" name="password2" required>
+          <div class="input-group-append">
+            <div class="input-group-text bg-primary text-white">
+              <span class="fas fa-lock"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-3">
+          <div class="col-12">
+            <button type="submit" class="btn btn-success btn-block shadow">Create Account</button>
+          </div>
+        </div>
+      </form>
+
+      {% if messages %}
+      <div class="col-12 mt-3">
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+          </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <div class="text-center mt-4">
+        <p class="mb-1">Already have an account?</p>
+        <a href="{% url 'login' %}" class="btn btn-outline-primary btn-sm">Back to Login</a>
+      </div>
+    </div>
+  </div>
+
+  <footer class="text-center mt-4 mb-2 text-muted">
+    <small>
+      © {% now "Y" %} Exalted School Student Attendance System<br>
+      Developed by <b>Kipngenoh Aaron Rotich</b><br>
+      <a href="mailto:kipngenohaaron@gmail.com">kipngenohaaron@gmail.com</a> |
+      <a href="tel:0724828197">0724828197</a>
+    </small>
+  </footer>
+</div>
+
+</body>
+
+{% endblock %}

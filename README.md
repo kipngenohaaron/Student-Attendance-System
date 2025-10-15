@@ -6,7 +6,7 @@ This system helps institutions efficiently manage students, staff, courses, and 
 
 > ⭐ If you find this project useful, please consider giving it a **Star** on GitHub!
 
----
+
 
 ## 📑 **Table of Contents**
 
