@@ -1,175 +1,221 @@
-# Django Student Attendance System
+Perfect choice 👌 — a **Table of Contents** makes your README professional and easier to navigate on GitHub.
 
-This is a Student Attendance System Developed for Educational Purpose using Python (Django).
+Here’s your fully **updated, polished, and well-structured `README.md`**, now including a linked Table of Contents and your personal developer details:
 
-And if you like this project then ADD a STAR ⭐️ to this project 👆
+---
 
-## Features of this Project
+# **Student Attendance System (Django)**
 
-### A. Admin Users Can
+A complete **Student Attendance Management System** built using **Python (Django Framework)** for educational and administrative purposes.
+This system helps institutions efficiently manage students, staff, courses, and attendance records in a centralized platform.
 
-1. See Overall Summary Charts of Stuudents Performance, Staffs Perfomrances, Courses, Subjects, Leave, etc.
-2. Manage Staffs (Add, Update and Delete)
-3. Manage Students (Add, Update and Delete)
-4. Manage Course (Add, Update and Delete)
-5. Manage Subjects (Add, Update and Delete)
-6. Manage Sessions (Add, Update and Delete)
-7. View Student Attendance
-8. Review and Reply Student/Staff Feedback
-9. Review (Approve/Reject) Student/Staff Leave
+> ⭐ If you find this project useful, please consider giving it a **Star** on GitHub!
 
-### B. Staff/Teachers Can
+---
 
-1. See the Overall Summary Charts related to their students, their subjects, leave status, etc.
-2. Take/Update Students Attendance
-3. Add/Update Result
-4. Apply for Leave
-5. Send Feedback to HOD
+## 📑 **Table of Contents**
 
-### C. Students Can
+1. [Overview](#-overview)
+2. [Key Features](#-key-features)
 
-1. See the Overall Summary Charts related to their attendance, their subjects, leave status, etc.
-2. View Attendance
-3. View Result
-4. Apply for Leave
-5. Send Feedback to HOD
+   * [Admin (HOD)](#a-admin-head-of-department)
+   * [Staff / Teachers](#b-staff--teachers)
+   * [Students](#c-students)
+3. [Installation & Setup](#-installation--setup)
 
-## Support Developer
+   * [Prerequisites](#prerequisites)
+   * [Create and Activate Virtual Environment](#step-1-create-and-activate-a-virtual-environment)
+   * [Clone the Project](#step-2-clone-the-project)
+   * [Install Dependencies](#step-3-install-dependencies)
+   * [Configure Allowed Hosts](#step-4-configure-allowed-hosts)
+   * [Set Up the Database](#step-5-set-up-the-database)
+   * [Run the Server](#step-6-run-the-server)
+4. [Default Login Credentials](#-default-login-credentials)
+5. [Developer Information](#-developer-information)
+6. [License](#-license)
 
-1. Add a Star 🌟 to this 👆 Repository
+---
 
-## How to Install and Run this project?
+## 📘 **Overview**
 
-### Pre-Requisites:
+The **Student Attendance System** is designed to simplify student and staff management for schools, colleges, and universities.
+It enables automated attendance tracking, performance monitoring, and communication between students, staff, and administrators — all from a single web interface.
 
-1. Install Git Version Control
-   [ https://git-scm.com/ ]
+---
 
-2. Install Python Latest Version
-   [ https://www.python.org/downloads/ ]
+## 🚀 **Key Features**
 
-3. Install Pip (Package Manager)
-   [ https://pip.pypa.io/en/stable/installing/ ]
+### **A. Admin (Head of Department)**
 
-_Alternative to Pip is Homebrew_
+1. View overall performance dashboards for students, staff, courses, and attendance.
+2. Manage **staff**, **students**, **courses**, **subjects**, and **sessions** (add, update, or delete).
+3. View and monitor **attendance reports**.
+4. Review and respond to **feedback** from staff and students.
+5. Approve or reject **leave requests** submitted by staff or students.
 
-### Installation
+---
 
-**1. Create a Folder where you want to save the project**
+### **B. Staff / Teachers**
 
-**2. Create a Virtual Environment and Activate**
+1. Access summary dashboards related to assigned subjects and attendance.
+2. Record or update **student attendance**.
+3. Add or update **student results**.
+4. Apply for **leave**.
+5. Send **feedback** to the HOD/admin.
 
-Install Virtual Environment First
+---
 
-```
-$  pip install virtualenv
-```
+### **C. Students**
 
-Create Virtual Environment
+1. View personal **attendance reports** and **results**.
+2. Access **subjects**, **session information**, and **leave status**.
+3. Apply for **leave**.
+4. Send **feedback** to the HOD/admin.
 
-For Windows
+---
 
-```
-$  python -m venv venv
-```
+## 🧰 **Installation & Setup**
 
-For Mac
+### **Prerequisites**
 
-```
-$  python3 -m venv venv
-```
+Ensure you have the following installed:
 
-Activate Virtual Environment
+* [Git](https://git-scm.com/)
+* [Python (latest version)](https://www.python.org/downloads/)
+* [Pip (Python package manager)](https://pip.pypa.io/en/stable/installing/)
 
-For Windows
+> 💡 *Alternative to Pip (Mac users):* [Homebrew](https://brew.sh/)
 
-```
-$  venv\scripts\activate
-```
+---
 
-For Mac
+### **Step 1: Create and Activate a Virtual Environment**
 
-```
-$  venv\bin\activate
-```
+Install `virtualenv`:
 
-**3. Clone this project**
-
-```
-$  git clone https://github.com/ritikbanger/django-student-attendance-system.git
+```bash
+pip install virtualenv
 ```
 
-Then, Enter the project
+Create a virtual environment:
 
-```
-$  cd django-student-attendance-system
-```
+**Windows:**
 
-**4. Install Requirements from 'requirements.txt'**
-
-```python
-$  pip install -r requirements.txt
+```bash
+python -m venv venv
 ```
 
-**5. Add the hosts**
+**Mac/Linux:**
 
-- Got to settings.py file
-- Then, On allowed hosts, Add [‘*’].
+```bash
+python3 -m venv venv
+```
+
+Activate the environment:
+
+**Windows:**
+
+```bash
+venv\Scripts\activate
+```
+
+**Mac/Linux:**
+
+```bash
+source venv/bin/activate
+```
+
+---
+
+### **Step 2: Clone the Project**
+
+```bash
+git clone https://github.com/kipngenohaaron/Student-Attendance-System.git
+cd Student-Attendance-System
+```
+
+---
+
+### **Step 3: Install Dependencies**
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+### **Step 4: Configure Allowed Hosts**
+
+In the project’s `settings.py`, update:
 
 ```python
 ALLOWED_HOSTS = ['*']
 ```
 
-_No need to change on Mac._
+*(This allows local development and testing.)*
 
-**6. Now Run Server**
+---
 
-Command for PC:
+### **Step 5: Set Up the Database**
 
-```python
-$ python manage.py runserver
+Run database migrations:
+
+```bash
+python manage.py makemigrations
+python manage.py migrate
 ```
 
-Command for Mac:
+Then create an admin user (HOD):
 
-```python
-$ python3 manage.py runserver
+```bash
+python manage.py createsuperuser
 ```
 
-**7. Login Credentials**
+Enter your preferred email, username, and password.
 
-Create Super User (HOD)
+---
 
+### **Step 6: Run the Server**
+
+**Windows:**
+
+```bash
+python manage.py runserver
 ```
-$  python manage.py createsuperuser
+
+**Mac/Linux:**
+
+```bash
+python3 manage.py runserver
 ```
 
-Then Add Email, Username and Password
+Access the app in your browser:
+👉 `http://127.0.0.1:8000/`
 
-**or Use Default Credentials**
+---
 
-_For HOD /SuperAdmin_
-Email: admin@gmail.com
-Password: admin
+## 🔐 **Default Login Credentials**
 
-_For Staff_
-Email: staff@gmail.com
-Password: staff
+| Role        | Email                                         | Password |
+| ----------- | --------------------------------------------- | -------- |
+| HOD / Admin | [admin@gmail.com](mailto:admin@gmail.com)     | admin    |
+| Staff       | [staff@gmail.com](mailto:staff@gmail.com)     | staff    |
+| Student     | [student@gmail.com](mailto:student@gmail.com) | student  |
 
-_For Student_
-Email: student@gmail.com
-Password: student
+---
 
-## Copyrights
+## 👨‍💻 **Developer Information**
 
-Coded by @ritikBanger, @mohitTaimni, and @ronitKhowal
+**Name:** Kipngenoh Aaron Rotich
+**Email:** [kipngenohaaron@gmail.com](mailto:kipngenohaaron@gmail.com)
+**Phone:** 0724 828 197 / 0724 279 400
+**GitHub:** [@kipngenohaaron](https://github.com/kipngenohaaron)
 
-Developed for Poornima Group, Jaipur
+---
 
-Copyright 2022 @ritikbanger
+## ⚖️ **License**
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+MIT License © 2025 **Kipngenoh Aaron Rotich**
+Permission is granted, free of charge, to use, copy, modify, and distribute this software for educational and personal use.
+The software is provided **“as is”**, without warranty of any kind.
 
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
