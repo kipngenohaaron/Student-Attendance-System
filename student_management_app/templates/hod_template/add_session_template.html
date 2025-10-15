@@ -5,76 +5,99 @@
 {% endblock page_title %}
 
 {% block main_content %}
-
 {% load static %}
 
 <section class="content">
-        <div class="container-fluid">
-
-            <div class="row">
-                <div class="col-md-12">
-                    <!-- general form elements -->
-                    <div class="card card-primary">
-                    <div class="card-header">
-                        <h3 class="card-title">Add Session Year</h3>
-                    </div>
-                    <!-- /.card-header -->
-                    <!-- form start -->
-                    <form role="form" method="POST" action="{% url 'add_session_save' %}">
-                        {% csrf_token %}
-
-                        
-                                {% comment %} Display Messages {% endcomment %}
-                                {% if messages %}
-                                <div class="form-group">
-                                <div class="col-12">
-                                    {% for message in messages %}
-                                    {% if message.tags == "error" %}
-                                        <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-top: 10px;">
-                                        {{ message }}
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                        </div>
-                                    {% elif message.tags == "success" %}
-                                        <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 10px;">
-                                        {{ message }}
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                        </div>
-                                    {% endif %}
-                                    {% endfor %}
-                                </div>
-                                </div>
-                                {% endif %}
-                            
-
-                        <div class="card-body">
-                            <div class="form-group">
-                                <label>Session Start Year </label>
-                                <input type="date" class="form-control" name="session_start_year">
-                            </div>
-
-                            <div class="form-group">
-                                <label>Session End Year </label>
-                                <input type="date" class="form-control" name="session_end_year">
-                            </div>
-
-                        </div>
-                        <!-- /.card-body -->
-
-                        <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">Add Session Year</button>
-                        </div>
-                    </form>
-                    </div>
-                    <!-- /.card -->
-
+    <div class="container-fluid d-flex justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg border-0 rounded-4">
+                
+                <!-- Header -->
+                <div class="card-header bg-gradient-primary text-white">
+                    <h3 class="card-title mb-0">
+                        <i class="fas fa-calendar-plus me-2"></i> Add Session Year
+                    </h3>
                 </div>
+
+                <!-- Form Start -->
+                <form method="POST" action="{% url 'add_session_save' %}">
+                    {% csrf_token %}
+
+                    <!-- Messages -->
+                    {% if messages %}
+                    <div class="p-3">
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show shadow-sm" role="alert">
+                                <i class="fas {% if message.tags == 'success' %}fa-check-circle text-success{% else %}fa-exclamation-triangle text-danger{% endif %} me-2"></i>
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <!-- Card Body -->
+                    <div class="card-body">
+                        <div class="form-group mb-4">
+                            <label class="fw-bold">Session Start Year</label>
+                            <input type="date" class="form-control form-control-lg rounded-3" name="session_start_year" required>
+                        </div>
+
+                        <div class="form-group mb-4">
+                            <label class="fw-bold">Session End Year</label>
+                            <input type="date" class="form-control form-control-lg rounded-3" name="session_end_year" required>
+                        </div>
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="card-footer text-center bg-light">
+                        <button type="submit" class="btn btn-primary btn-lg px-5 shadow-sm">
+                            <i class="fas fa-save me-2"></i> Add Session Year
+                        </button>
+                    </div>
+                </form>
             </div>
+        </div>
+    </div>
+</section>
 
-        </div><!-- /.container-fluid -->
-      </section>
+<!-- Custom Styling -->
+<style>
+    .bg-gradient-primary {
+        background: linear-gradient(90deg, #007bff, #00aaff);
+    }
 
-  {% endblock main_content %}
+    .card {
+        transition: all 0.3s ease;
+        margin-top: 30px;
+    }
+
+    .card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0px 10px 22px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-label {
+        color: #2c3e50;
+        font-weight: 600;
+    }
+
+    .btn-primary {
+        background: linear-gradient(90deg, #007bff, #00aaff);
+        border: none;
+        border-radius: 30px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background: linear-gradient(90deg, #0069d9, #0099cc);
+        transform: scale(1.05);
+        box-shadow: 0px 6px 14px rgba(0, 123, 255, 0.4);
+    }
+
+    .alert {
+        border-radius: 12px;
+    }
+</style>
+
+{% endblock main_content %}
