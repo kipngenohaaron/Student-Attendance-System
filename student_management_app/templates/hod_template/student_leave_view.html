@@ -5,27 +5,43 @@
 {% endblock page_title %}
 
 {% block main_content %}
-
 {% load static %}
 
 <section class="content">
   <div class="container-fluid">
 
-    <div class="row">
-      <div class="col-md-12">
+    <div class="row justify-content-center">
+      <div class="col-md-11">
 
         <!-- Leave Applications Card -->
-        <div class="card shadow-lg border-0 rounded-lg">
-          <div class="card-header bg-gradient-primary text-white">
-            <h3 class="card-title">
-              <i class="fas fa-calendar-check"></i> Student Leave Applications
+        <div class="card shadow-lg border-0 rounded-4">
+          <div class="card-header bg-gradient-primary text-white d-flex justify-content-between align-items-center">
+            <h3 class="card-title mb-0">
+              <i class="fas fa-calendar-check me-2"></i> Student Leave Applications
             </h3>
+            <img src="{% static 'dist/img/school logo.jpg' %}" alt="Exalted School Logo" height="40" class="rounded-circle shadow-sm">
           </div>
 
           <div class="card-body">
+
+            <!-- Search and Filter -->
+            <div class="row mb-3">
+              <div class="col-md-5 mb-2">
+                <input type="text" id="searchBox" class="form-control border-primary" placeholder="Search by Student ID, Name, or Message...">
+              </div>
+              <div class="col-md-3 mb-2">
+                <select id="filterStatus" class="form-control border-primary">
+                  <option value="all">All Status</option>
+                  <option value="pending">Pending</option>
+                  <option value="approved">Approved</option>
+                  <option value="rejected">Rejected</option>
+                </select>
+              </div>
+            </div>
+
             {% if leaves %}
             <div class="table-responsive">
-              <table class="table table-hover table-striped align-middle">
+              <table class="table table-hover align-middle" id="leaveTable">
                 <thead class="table-primary text-center">
                   <tr>
                     <th>ID</th>
@@ -40,8 +56,8 @@
 
                 <tbody>
                   {% for leave in leaves %}
-                  <tr>
-                    <td class="text-center">{{ leave.id }}</td>
+                  <tr data-status="{% if leave.leave_status == 0 %}pending{% elif leave.leave_status == 1 %}approved{% else %}rejected{% endif %}">
+                    <td class="text-center fw-bold">{{ leave.id }}</td>
                     <td class="text-center">{{ leave.student_id.admin.id }}</td>
                     <td>{{ leave.student_id.admin.first_name }} {{ leave.student_id.admin.last_name }}</td>
                     <td class="text-center">
@@ -52,17 +68,17 @@
                     <td class="text-center">
                       {% if leave.leave_status == 0 %}
                         <a href="{% url 'student_leave_approve' leave_id=leave.id %}" 
-                           class="btn btn-outline-success btn-sm">
+                           class="btn btn-outline-success btn-sm me-1 approve-btn">
                            <i class="fas fa-check-circle"></i> Approve
                         </a>
                         <a href="{% url 'student_leave_reject' leave_id=leave.id %}" 
-                           class="btn btn-outline-danger btn-sm">
+                           class="btn btn-outline-danger btn-sm reject-btn">
                            <i class="fas fa-times-circle"></i> Reject
                         </a>
                       {% elif leave.leave_status == 1 %}
-                        <span class="badge bg-success p-2"><i class="fas fa-check"></i> Approved</span>
+                        <span class="badge bg-success px-2 py-2"><i class="fas fa-check"></i> Approved</span>
                       {% else %}
-                        <span class="badge bg-danger p-2"><i class="fas fa-times"></i> Rejected</span>
+                        <span class="badge bg-danger px-2 py-2"><i class="fas fa-times"></i> Rejected</span>
                       {% endif %}
                     </td>
                   </tr>
@@ -76,8 +92,12 @@
               </div>
             {% endif %}
           </div>
-        </div>
 
+          <div class="card-footer text-center small text-muted">
+            <i class="fas fa-school"></i> Exalted School Leave Management System
+          </div>
+
+        </div>
       </div>
     </div>
 
@@ -87,15 +107,43 @@
 {% endblock main_content %}
 
 {% block custom_js %}
-<!-- Optional: Add small animation or confirmation -->
 <script>
-  $(document).ready(function() {
-    $(".btn-outline-success").click(function() {
-      return confirm("Are you sure you want to approve this leave?");
-    });
-    $(".btn-outline-danger").click(function() {
-      return confirm("Are you sure you want to reject this leave?");
+$(document).ready(function(){
+
+  // ✅ Confirmation prompts
+  $(".approve-btn").click(function(){
+    return confirm("Are you sure you want to approve this leave?");
+  });
+  $(".reject-btn").click(function(){
+    return confirm("Are you sure you want to reject this leave?");
+  });
+
+  // 🔍 Search functionality
+  $("#searchBox").on("keyup", function(){
+    const value = $(this).val().toLowerCase();
+    $("#leaveTable tbody tr").filter(function(){
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
     });
   });
+
+  // 🎯 Filter by Status
+  $("#filterStatus").on("change", function(){
+    const selected = $(this).val();
+    $("#leaveTable tbody tr").each(function(){
+      const status = $(this).data("status");
+      if (selected === "all" || status === selected) {
+        $(this).show();
+      } else {
+        $(this).hide();
+      }
+    });
+  });
+
+  // ✨ Row hover animation
+  $("#leaveTable tbody tr").hover(
+    function(){ $(this).addClass("table-active shadow-sm"); },
+    function(){ $(this).removeClass("table-active shadow-sm"); }
+  );
+});
 </script>
 {% endblock custom_js %}
