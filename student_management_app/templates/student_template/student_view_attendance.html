@@ -1,107 +1,87 @@
 {% extends 'student_template/base_template.html' %}
 
 {% block page_title %}
-    View Attendance Data
+    View Attendance Records
 {% endblock page_title %}
 
 {% block main_content %}
-
 {% load static %}
 
 <section class="content">
-        <div class="container-fluid">
+  <div class="container-fluid">
 
-            <div class="row">
-                <div class="col-md-12">
-                    <!-- general form elements -->
-                    <div class="card card-primary">
-                    <div class="card-header">
-                        <h3 class="card-title">View Attendance</h3>
-                    </div>
-                    <!-- /.card-header -->
+    <div class="row justify-content-center">
+      <div class="col-md-10">
+        <div class="card shadow-lg border-0 rounded-3">
+          <div class="card-header bg-gradient-primary text-white d-flex justify-content-between align-items-center">
+            <h3 class="card-title mb-0">
+              <i class="fas fa-calendar-check mr-2"></i> View Attendance
+            </h3>
+            <span class="badge bg-light text-primary px-3 py-2">Student Portal</span>
+          </div>
 
-                                {% comment %} Display Messages {% endcomment %}
-                                {% if messages %}
-                                <div class="form-group">
-                                <div class="col-12">
-                                    {% for message in messages %}
-                                    {% if message.tags == "error" %}
-                                        <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-top: 10px;">
-                                        {{ message }}
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                        </div>
-                                    {% elif message.tags == "success" %}
-                                        <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 10px;">
-                                        {{ message }}
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                        </div>
-                                    {% endif %}
-                                    {% endfor %}
-                                </div>
-                                </div>
-                                {% endif %}
-                            
-                        <form method="POST" action="{% url 'student_view_attendance_post' %}">
-                        {% csrf_token %}
+          {% if messages %}
+          <div class="p-3">
+            {% for message in messages %}
+              <div class="alert alert-{{ message.tags }} alert-dismissible fade show mt-2 shadow-sm" role="alert">
+                <i class="fas {% if message.tags == 'success' %}fa-check-circle{% elif message.tags == 'error' %}fa-exclamation-triangle{% endif %}"></i>
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            {% endfor %}
+          </div>
+          {% endif %}
 
-                        <div class="card-body">
-                           
-                            <div class="form-group">
-                                <label>Subject </label>
-                                <select class="form-control" name="subject" id="subject">
-                                    {% for subject in subjects %}
-                                        <option value="{{ subject.id }}">{{ subject.subject_name }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
+          <form method="POST" action="{% url 'student_view_attendance_post' %}">
+            {% csrf_token %}
+            <div class="card-body">
+              <div class="form-group mb-4">
+                <label class="fw-semibold"><i class="fas fa-book-open text-primary me-2"></i> Subject</label>
+                <select class="form-select shadow-sm" name="subject" id="subject" required>
+                  <option value="" disabled selected>-- Select Subject --</option>
+                  {% for subject in subjects %}
+                    <option value="{{ subject.id }}">{{ subject.subject_name }}</option>
+                  {% endfor %}
+                </select>
+              </div>
 
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label>Start Date </label>
-                                        <input type="date" class="form-control" name="start_date" />
-                                    </div>
-                                </div>
-                                
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label>End Date </label>
-                                        <input type="date" class="form-control" name="end_date" />
-                                    </div>
-                                </div>
-                                
-                            </div>
-
-
-                        </div>
-                        <!-- /.card-body -->
-
-                        <div class="card-footer">
-                        <button type="submit" class="btn btn-primary" id="fetch_student">Fetch Attendance</button>
-                        </div>
-
-                        {% comment %} Displaying Students Here {% endcomment %}
-
-                        <div class="card-footer" id="student_data">
-                        </div> 
-
-                    </div>
-
-                    </form>
-                    <!-- /.card -->
-
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="fw-semibold"><i class="fas fa-calendar-day text-primary me-2"></i> Start Date</label>
+                  <input type="date" class="form-control shadow-sm" name="start_date" required>
                 </div>
+                <div class="col-md-6 mb-3">
+                  <label class="fw-semibold"><i class="fas fa-calendar-day text-primary me-2"></i> End Date</label>
+                  <input type="date" class="form-control shadow-sm" name="end_date" required>
+                </div>
+              </div>
             </div>
 
-        </div><!-- /.container-fluid -->
-      </section>
+            <div class="card-footer bg-light text-center">
+              <button type="submit" class="btn btn-primary px-5 py-2 shadow-sm">
+                <i class="fas fa-search me-2"></i> Fetch Attendance
+              </button>
+            </div>
 
-  {% endblock main_content %}
+            <div class="card-body" id="student_data">
+              <!-- Attendance data will be displayed here -->
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock main_content %}
 
 {% block custom_js %}
-
+<script>
+  // Optional: Smooth scroll to results
+  document.getElementById('fetch_student')?.addEventListener('click', () => {
+    setTimeout(() => {
+      document.getElementById('student_data')?.scrollIntoView({ behavior: 'smooth' });
+    }, 500);
+  });
+</script>
 {% endblock custom_js %}
