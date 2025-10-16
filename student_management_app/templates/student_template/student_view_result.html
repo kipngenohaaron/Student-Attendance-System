@@ -5,62 +5,68 @@
 {% endblock page_title %}
 
 {% block main_content %}
-
 {% load static %}
 
 <section class="content">
-        <div class="container-fluid">
+  <div class="container-fluid">
 
-            
+    <!-- Result Table Card -->
+    <div class="card shadow-lg border-0">
+      <div class="card-header bg-primary text-white">
+        <h3 class="card-title mb-0"><i class="fas fa-graduation-cap"></i> My Results</h3>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-hover table-bordered">
+            <thead class="thead-light">
+              <tr>
+                <th>#</th>
+                <th>Subject</th>
+                <th>Assignments Marks</th>
+                <th>Exam Marks</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for row in student_result %}
+              <tr>
+                <td>{{ row.id }}</td>
+                <td>{{ row.subject_id.subject_name }}</td>
+                <td>{{ row.subject_assignment_marks }}</td>
+                <td>{{ row.subject_exam_marks }}</td>
+                <td>
+                  {% if row.subject_exam_marks >= 40 %}
+                    <span class="badge badge-success">Pass</span>
+                  {% else %}
+                    <span class="badge badge-danger">Fail</span>
+                  {% endif %}
+                </td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="5" class="text-center text-muted">No results available yet.</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
 
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card card-primary">
-                        <div class="card-header">
-                            <h3 class="card-title">Result</h3>
-                        </div>
-
-                        <div class="card-body">
-                           <div class="table-responsive">
-                                <table class="table">
-                                    <thead class="thead-light">
-                                    <tr>
-                                        <th>#ID</th>
-                                        <th>Subject</th>
-                                        <th>Assignments Marks</th>
-                                        <th>Exam Marks</th>
-                                        <th>status</th>
-                                    </tr>
-                                    </thead>
-                                    
-                                    {% for row in student_result %}
-                                    <tr>
-                                        <td>{{ row.id }}</td>
-                                        <td>{{ row.subject_id.subject_name }}</td>
-                                        <td>{{ row.subject_assignment_marks }}</td>
-                                        <td>{{ row.subject_exam_marks }}</td>
-                                        <td>
-                                            {% if row.subject_exam_marks >= 40 %}
-                                                <span class="alert alert-success">Pass</span>
-                                            {% else %}
-                                                <span class="alert alert-danger">Fail</span>
-                                            {% endif %}
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                </table>
-                            </div>
-                        </div>
-                        <!-- /.card-body -->
-                    </div>
-                </div>
-            </div>
-
-        </div><!-- /.container-fluid -->
-      </section>
-
-  {% endblock main_content %}
+  </div>
+</section>
+{% endblock main_content %}
 
 {% block custom_js %}
-
+<script>
+  // Optional subtle hover animation for the card
+  document.addEventListener("DOMContentLoaded", () => {
+    const card = document.querySelector('.card');
+    if (card) {
+      card.style.transition = 'transform 0.3s ease';
+      card.addEventListener('mouseover', () => card.style.transform = 'scale(1.02)');
+      card.addEventListener('mouseout', () => card.style.transform = 'scale(1)');
+    }
+  });
+</script>
 {% endblock custom_js %}
