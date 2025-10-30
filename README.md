@@ -192,8 +192,9 @@ Access the app in your browser:
 
 | Role        | Email                                         | Password |
 | ----------- | --------------------------------------------- | -------- |
+
 | HOD / Admin | [admin@gmail.com](mailto:admin@gmail.com)     | admin    |
-| Staff       | [staff@gmail.com](mailto:staff@gmail.com)     | staff    |
+| Staff       | [staff1@gmail.com](mailto:staff@gmail.com)    | 1234     |
 | Student     | [student@gmail.com](mailto:student@gmail.com) | student  |
 
 ---
